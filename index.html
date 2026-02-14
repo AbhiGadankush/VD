@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Site</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        video {
+            max-width: 1200px;
+            width: 90%;
+            height: auto;
+        }
+
+        p {
+            margin-top: 20px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        video {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <video id="videoPlayer">
+            <source id="videoSource" src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p id="caption">Happy Valentine's Day 🩵</p>
+    </div>
+
+    <script>
+        // Array of local video files
+        const videos = [
+            "video1.mov",
+            "video2.mov",
+            "video3.mov",
+            "video4.mov"
+        ];
+
+        let currentVideoIndex = 0;
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoSource = document.getElementById('videoSource');
+        const captionElement = document.getElementById('caption');
+
+        // Set the caption (same for all videos)
+        captionElement.textContent = "Happy Valentine's Day 🩵";
+
+        // Function to load and play a video
+        function loadVideo(index) {
+            videoSource.src = videos[index];
+            videoPlayer.load();
+            videoPlayer.play();
+        }
+
+        // Click on video to play/pause
+        videoPlayer.addEventListener('click', function() {
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+            } else {
+                videoPlayer.pause();
+            }
+        });
+
+        // When current video ends, play the next one
+        videoPlayer.addEventListener('ended', function() {
+            currentVideoIndex++;
+            // Loop back to first video after the last one
+            if (currentVideoIndex >= videos.length) {
+                currentVideoIndex = 0;
+            }
+            loadVideo(currentVideoIndex);
+        });
+
+        // Load the first video when page loads
+        loadVideo(currentVideoIndex);
+    </script>
+</body>
+</html>
